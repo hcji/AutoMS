@@ -15,7 +15,7 @@ from tqdm import tqdm
 from fitter import Fitter
 from scipy.stats import t
 from sklearn.preprocessing import MinMaxScaler
-from peakeval.mspd_original import peaks_detection
+from AutoMS.mspd_original import peaks_detection
 
 
 def evaluate_noise():
@@ -60,9 +60,10 @@ def evaluate_noise():
     return distance, X_noise, X_rebuild
 
 
-def evaluate_peaks(peaks, pics, length=14, params=(8.5101, 1.6113, 0.1950), cal_snr=False):
+def evaluate_peaks(peaks, pics, length=14, params=(8.5101, 1.6113, 0.1950), min_width = 6, cal_snr=False, use_cnn=False):
     traces, snrs = [], []
     exclude = []
+
     for i in tqdm(peaks.index):
         rt = peaks.loc[i, 'rt']
         pic = peaks.loc[i, 'pic_label']
@@ -71,24 +72,30 @@ def evaluate_peaks(peaks, pics, length=14, params=(8.5101, 1.6113, 0.1950), cal_
         x = np.linspace(rt - length, rt + length, 50)
         x0, y0 = pic[:,0], pic[:,2]
         y = np.interp(x, x0, y0)
-        if max(y[24], y[25]) < np.max(y[22:28]):
+        y = y / np.max(y)
+        traces.append(y)
+        
+        if max(y[24], y[25]) < np.max(y[int(25-min_width/2):int(25+min_width/2)]):
             exclude.append(i)
+        elif np.min(y[int(25-min_width/2):int(25+min_width/2)]) < 0.3:
+            exclude.append(i)
+        else:
+            pass
         
         if cal_snr:
-            pks, sigs, snrs_ = peaks_detection(y, np.arange(1, 30), 5)
+            pks, sigs, snrs_ = peaks_detection(y, np.arange(1, 30), 0)
             if (len(snrs_) == 0) or (np.min(np.abs(np.array(pks) - 25)) > 3):
                 snr = 0
             else:
                 wh = np.argmin(np.abs(np.array(pks) - 25))
                 snr = snrs_[wh]
             snrs.append(snr)
-        traces.append(y)
+            
     snrs = np.array(snrs)
     traces = np.array(traces)
     exclude = np.array(exclude)
     
-    scl = MinMaxScaler()
-    X = scl.fit_transform(traces.T).T
+    X = traces
     autoencoder = tf.keras.models.load_model('model/denoising_autoencoder.pkl')
     X_rebuild = autoencoder.predict(X)
     X_rebuild = np.reshape(X_rebuild, [-1, 50])
@@ -97,6 +104,12 @@ def evaluate_peaks(peaks, pics, length=14, params=(8.5101, 1.6113, 0.1950), cal_
     scores = t.pdf(distance, params[0], loc = params[1], scale = params[2])
     scores = -np.log10(scores)
     scores[exclude] = 0
+    
+    if use_cnn:
+        cnn = tf.keras.models.load_model('model/cnn.pkl')
+        classes = cnn.predict(X)
+        cnn_output = np.argmax(classes, axis = 1)
+        
     
     '''
     k = 44
@@ -118,4 +131,4 @@ def evaluate_peaks(peaks, pics, length=14, params=(8.5101, 1.6113, 0.1950), cal_
     plt.fill_between(np.arange(50), y1, color = 'lightblue')
     '''
     
-    return scores, snrs, X, X_rebuild, distance
+    return scores, snrs, cnn_output, X, X_rebuild, distance

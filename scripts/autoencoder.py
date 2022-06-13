@@ -10,7 +10,6 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import backend as K
 from matplotlib import pyplot as plt
-from PIL import Image
 from sklearn.model_selection import train_test_split
 
 # load data

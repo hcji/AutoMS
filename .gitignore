@@ -1,8 +1,5 @@
-/data/
-/dist/
-/setup/
 /.spyproject/
+/data/
 *.pyc
-*.h5
 *.npy
 *.npz

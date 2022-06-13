@@ -217,7 +217,7 @@ def to_deque(pic_list, min_snr, rt_v, intensity):
     return peak_list, new_pic_list
 
 
-def hpic(file_in, min_intensity=250, min_snr=3, mass_inv=1, rt_inv=15):
+def hpic(file_in, min_intensity=250, min_snr=3, mass_inv=1, rt_inv=15, peak_width=15):
     """
     Extract pure ion chromatograms from LC-MS dataset
 
@@ -252,7 +252,11 @@ def hpic(file_in, min_intensity=250, min_snr=3, mass_inv=1, rt_inv=15):
 
     interval, pic_list = PIC(file_in, min_intensity)
     interval *= 1.5
-    return to_deque(pic_list, min_snr, interval, min_intensity)
+    
+    peak_list, new_pic_list = to_deque(pic_list, min_snr, interval, min_intensity)
+    # peak_list = peak_list[peak_list['rt2'] - peak_list['rt1'] >= peak_width]
+    # peak_list = peak_list.reset_index(drop = True)
+    return peak_list, new_pic_list
 
 
 if __name__ == '__main__':
