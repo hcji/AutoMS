@@ -109,24 +109,28 @@ def evaluate_peaks(peaks, pics, length=14, params=(8.5101, 1.6113, 0.1950), min_
         cnn = tf.keras.models.load_model('model/cnn.pkl')
         classes = cnn.predict(X)
         cnn_output = np.argmax(classes, axis = 1)
+    else:
+        cnn_output = []
         
     
     '''
-    k = 44
+    k = 3233
     print(scores[k])
     y = X[k,:]
-    y1 = y + np.random.normal(0, 0.1, size = y.shape)
     y2 = X_rebuild[k,:]
     
-    plt.figure(dpi = 300)
+    plt.figure(dpi = 300, figsize = (4.5,3))
     plt.plot(y, lw = 3, label = 'original')
     plt.fill_between(np.arange(50), y, color = 'lightblue', alpha = 0.7)
 
     plt.plot(y2, lw = 3, color = 'red', label = 'reconstructed')
     plt.fill_between(np.arange(50), y2, color = 'lightpink', alpha = 0.7)
-    # plt.legend(loc = 'upper left')
+    plt.legend(loc = 'upper left')
+    plt.xlabel('scan index')
+    plt.ylabel('relative intensity')
     
     plt.figure(dpi = 300)
+    y1 = y + np.random.normal(0, 0.1, size = y.shape)
     plt.plot(y1, lw = 3)
     plt.fill_between(np.arange(50), y1, color = 'lightblue')
     '''
