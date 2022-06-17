@@ -1,4 +1,5 @@
 /.spyproject/
+/.ipynb_checkpoints/
 /data/
 *.pyc
 *.npy
