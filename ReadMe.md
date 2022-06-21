@@ -28,8 +28,7 @@ AutoMS is a peak picking and quality estimation tool for LC-MS data processing, 
 
 ## Usage (with HPIC)
 
-        from AutoMS import hpic
-        from AutoMS import peakeval
+        from AutoMS.automs import AutoMS
 
         file = 'data/600mix_pos.mzML'
         peaks = AutoMS(file, min_intensity = 5000)
