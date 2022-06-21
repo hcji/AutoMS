@@ -18,12 +18,13 @@ AutoMS is a peak picking and quality estimation tool for LC-MS data processing, 
 
   1. Clone the repository and enter:
 
-        git clone https://github.com/hcji/AutoMS.git
-        cd ./AutoMS
+                git clone https://github.com/hcji/AutoMS.git
+                cd ./AutoMS
 
   2. Run python
 
-        python
+                 python
+
 
 ## Usage (with HPIC)
 
