@@ -1,7 +1,7 @@
 # AutoMS
 
 <div align="center">
-<img src="https://github.com/hcji/AutoMS/blob/master/AutoMS.png" width="50%">
+<img src="https://github.com/hcji/AutoMS/blob/main/AutoMS.png" width="50%">
 </div>
 
 AutoMS is a peak picking and quality estimation tool for LC-MS data processing, which utilizes a denoising autoencoder (DAE) to find the common characteristics of chromatographic peaks, and predict the noise-free peaks from input ROIs. AutoMS integrates HPIC for ROI extraction in order to accept raw data directly and output quantitative results. It also supports peak lists obtained from other tools with little adjustment.
