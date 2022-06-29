@@ -36,7 +36,14 @@ AutoMS is a peak picking and quality estimation tool for LC-MS data processing, 
 
 ## Usage (with XCMS/MZMine)
 
-  Coming soon ...
+        import pandas as pd
+        from AutoMS.automs_external import AutoMS_External
+        
+        file = 'data/600mix_pos.mzML'
+        
+        ## Need reset the column name of xcms/mzmine output refer to demo file.
+        peaks = pd.read_csv('data/xcms_mzmine_input_demo.csv')
+        peaks = AutoMS_External(file, peaks)
 
 
 ## Contact
