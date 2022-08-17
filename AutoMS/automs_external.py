@@ -14,6 +14,12 @@ import rpy2.robjects.pandas2ri as pandas2ri
 from AutoMS import peakeval
 
 rcodes  =  '''
+
+if (!'xcms' %in% installed.packages()){
+  suppressMessages(install.packages('BiocManager'))
+  suppressMessages(BiocManager::install('xcms'))
+}
+
 library(xcms)
 
 getEIC <- function(file, peaks){
@@ -30,7 +36,7 @@ getEIC <- function(file, peaks){
 
 def AutoMS_External(file, peaks, length=14, params=(8.5101, 1.6113, 0.1950), min_width = 6):
     """
-        1. Install R >= 3.4.1
+        1. Install R >= 3.4.1 and R <= 4.1.1
         2. Set R_HOME environment variable
         3. Install XCMS in R
     """

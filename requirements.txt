@@ -1,0 +1,10 @@
+fitter==1.2.3
+hdbscan==0.8.28
+matplotlib==3.5.3
+pandas==1.4.3
+pymzml==2.5.1
+scikit-learn==1.1.2
+scipy==1.9.0
+seaborn==0.11.2
+tensorflow==2.9.1
+tqdm

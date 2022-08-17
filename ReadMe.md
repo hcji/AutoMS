@@ -9,21 +9,28 @@ AutoMS is a peak picking and quality estimation tool for LC-MS data processing, 
 
 ## Depends:
 
-  1. [Anaconda](https://www.anaconda.com/) >= 3.8
-  2. [Tensorflow](https://www.tensorflow.org/) >= 2.9.1
-  3. [pymzml](https://pymzml.readthedocs.io/en/latest/)
-
+  [Anaconda](https://www.anaconda.com/)
+  
 
 ## Installation
 
-  1. Clone the repository and enter:
+  1. Create conda environment and activate:
+          
+                conda create -n automs python=3.8
+                conda activate automs
+  
+  2. Clone the repository and enter:
 
                 git clone https://github.com/hcji/AutoMS.git
                 cd ./AutoMS
+                
+  3. Install dependency:
 
-  2. Run python
+                pip install -r requirements.txt
+                
+  4. Run python
 
-                 python
+                python
 
 
 ## Usage (with HPIC)
@@ -35,7 +42,10 @@ AutoMS is a peak picking and quality estimation tool for LC-MS data processing, 
         
 
 ## Usage (with XCMS/MZMine)
-
+        
+        # need install rpy2: pip install rpy2,
+        # and set R_HOME first (R version >= 3.4.1 and <= 4.1.1).
+        
         import pandas as pd
         from AutoMS.automs_external import AutoMS_External
         
