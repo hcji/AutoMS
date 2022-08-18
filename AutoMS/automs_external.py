@@ -57,9 +57,9 @@ def AutoMS_External(file, peaks, length=14, params=(8.5101, 1.6113, 0.1950), min
     peaks['pic_label'] = pics_label
     pics_xcms = dict(zip(pics_label, pics_xcms))
         
-    scores, mspd_snrs, cnn_output, _, _, _ = peakeval.evaluate_peaks(peaks, pics_xcms, length=length, 
+    scores, mspd_snrs, _, _, _ = peakeval.evaluate_peaks(peaks, pics_xcms, length=length, 
                                                                      params=params, min_width = min_width, 
-                                                                     cal_snr=False, use_cnn=False)
+                                                                     cal_snr=False)
     scores = np.array(scores)
     scores[scores < 0] = 0
     peaks['score'] = scores

@@ -49,7 +49,7 @@ X_rebuild = autoencoder.predict(X_true)
 X_rebuild = np.reshape(X_rebuild, [-1, 50]) 
 dist_true = np.array([np.linalg.norm(X_true[i] - X_rebuild[i]) for i in range(len(X_true))])
 
-scores, mspd_snrs, cnn_output, X, X_rebuild, dist_eval = peakeval.evaluate_peaks(peaks, pics, cal_snr=True, use_cnn=True)
+scores, mspd_snrs, cnn_output, X, X_rebuild, dist_eval = peakeval.evaluate_peaks(peaks, pics, cal_snr=True)
 
 dist_false, _, _ = peakeval.evaluate_noise()
 
@@ -59,6 +59,26 @@ sns.distplot(dist_false, kde=True, bins = 40, label = 'false peaks')
 sns.distplot(dist_eval, kde=True, bins = 40, label = 'evaluating ROIs')
 plt.xlabel('Euclidean distance', fontsize = 10)
 plt.legend()
+
+
+plt.figure(dpi = 300, figsize = (10,8))
+for i, k in enumerate([2800, 2794, 6069, 6756]):
+    y = X[k,:]
+    y2 = X_rebuild[k,:]
+        
+    plt.subplot(2, 2, i+1)
+    plt.plot(y, lw = 3, label = 'original')
+    plt.fill_between(np.arange(50), y, color = 'lightblue', alpha = 0.7)
+    
+    plt.plot(y2, lw = 3, color = 'red', label = 'reconstructed')
+    plt.fill_between(np.arange(50), y2, color = 'lightpink', alpha = 0.7)
+    plt.text(0.1, 0.95, 'Scores: {}'.format(round(scores[k], 2)), fontsize = 15)
+    
+    plt.legend(loc = 'upper right')
+    plt.xlabel('scan index')
+    plt.ylabel('relative intensity')
+
+
 
 peaks['AutoMS Score'] = scores
 peaks['MSPD SNR'] = mspd_snrs

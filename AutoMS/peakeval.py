@@ -60,7 +60,7 @@ def evaluate_noise():
     return distance, X_noise, X_rebuild
 
 
-def evaluate_peaks(peaks, pics, length=14, params=(8.5101, 1.6113, 0.1950), min_width = 6, cal_snr=False, use_cnn=False):
+def evaluate_peaks(peaks, pics, length=14, params=(8.5101, 1.6113, 0.1950), min_width = 6, cal_snr=False):
     traces, snrs = [], []
     exclude = []
 
@@ -101,16 +101,12 @@ def evaluate_peaks(peaks, pics, length=14, params=(8.5101, 1.6113, 0.1950), min_
     X_rebuild = np.reshape(X_rebuild, [-1, 50])
     
     distance = np.array([np.linalg.norm(X[i] - X_rebuild[i]) for i in range(len(X))])
+    worse = np.array([i for i in range(len(distance)) if distance[i] >= params[1]])
+    
     scores = t.pdf(distance, params[0], loc = params[1], scale = params[2])
     scores = -np.log10(scores)
     scores[exclude] = 0
-    
-    if use_cnn:
-        cnn = tf.keras.models.load_model('model/cnn.pkl')
-        classes = cnn.predict(X)
-        cnn_output = np.argmax(classes, axis = 1)
-    else:
-        cnn_output = []
+    scores[worse] = 0
         
     
     '''
@@ -135,4 +131,4 @@ def evaluate_peaks(peaks, pics, length=14, params=(8.5101, 1.6113, 0.1950), min_
     plt.fill_between(np.arange(50), y1, color = 'lightblue')
     '''
     
-    return scores, snrs, cnn_output, X, X_rebuild, distance
+    return scores, snrs, X, X_rebuild, distance
