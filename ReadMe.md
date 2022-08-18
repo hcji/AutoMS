@@ -56,6 +56,13 @@ AutoMS is a peak picking and quality estimation tool for LC-MS data processing, 
         peaks = AutoMS_External(file, peaks)
 
 
+## Paper Reproduce
+
+All the results in the paper can be reproduced by the scripts in the *notebook* dir. 
+Please download the dataset in the [figshare](https://figshare.com/articles/dataset/Dataset_of_AutoMS/20499687),
+and unzip them to the *data* dir. 
+
+
 ## Contact
 
 Ji Hongchao   
