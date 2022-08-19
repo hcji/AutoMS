@@ -1,4 +1,4 @@
-# AutoMS
+# AutoMS  ![GitHub](https://img.shields.io/github/license/hcji/AutoMS)
 
 <div align="center">
 <img src="https://github.com/hcji/AutoMS/blob/main/TOC.png" width="70%">
