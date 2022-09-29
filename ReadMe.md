@@ -35,6 +35,8 @@ AutoMS is a peak picking and quality estimation tool for LC-MS data processing, 
 
 ## Usage (with HPIC)
 
+Please download the [demo data](https://figshare.com/articles/dataset/Dataset_of_AutoMS/20499687) and run the following codes.  
+
         from AutoMS.automs import AutoMS
 
         file = 'data/600mix_pos.mzML'
@@ -42,6 +44,8 @@ AutoMS is a peak picking and quality estimation tool for LC-MS data processing, 
         
 
 ## Usage (with XCMS/MZMine)
+
+Please download the [demo data](https://figshare.com/articles/dataset/Dataset_of_AutoMS/20499687) and run the following codes.
         
         # need install rpy2: pip install rpy2,
         # and set R_HOME first (R version >= 3.4.1 and <= 4.1.1).
